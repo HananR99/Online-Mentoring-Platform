@@ -1,6 +1,7 @@
 import React from 'react';
 import aboutImg from '../../assets/images/about.jpeg';
 import aboutCardImg from '../../assets/images/about-card.png';
+import {Link} from 'react-router-dom';
 
 const About = () => {
   return <section>
@@ -16,6 +17,22 @@ const About = () => {
                 </div>
             </div>
 
+            {/* ====== about content========= */}
+            <div className="w-full lg:w-1/2 xl:w-[670px] order-1 lg:order-2">
+              <h2 className='heading'>Proud to be One of the Nation's Best</h2>
+
+              <p className='text_para text-justify'>At Mentor Cruise, we're on a mission to connect aspiring 
+              professionals with experienced mentors who can provide guidance, share knowledge, and inspire growth. 
+              Our platform is a hub for mentorship across a variety of fields, offering an opportunity to learn, 
+              network, and achieve your goals.</p>
+
+              <p className='text_para mt-[30px] text-justify'>Join our thriving community and embark on a journey of personal and professional development. 
+              We're here to help you navigate the path to success.</p>
+              
+              <Link to='/'>
+              <button className="btn">Learn More</button>
+              </Link>
+            </div>
         </div>
     </div>
   </section>
