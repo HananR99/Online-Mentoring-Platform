@@ -15,7 +15,7 @@ export const mentors = [
   {
     id: "02",
     name: "Ray Dalio",
-    specialization: "Motivational Speaker",
+    specialization: "Counselor",
     avgRating: 4.5,
     totalRating: 152,
     photo: mentorImg02,

@@ -278,7 +278,7 @@ const Home = () => {
       <section>
         <div className="container">
         <div className="xl:w-[470px] mx-auto">
-            <h2 className='heading text-center'>What our mentees say</h2>
+            <h2 className='heading text-center'>What our Mentees say</h2>
             <p className='text_para text-center'>
             Discover the impact of mentorship through the words of our mentees. 
             Read their inspiring stories of growth, skill development, and career success.
