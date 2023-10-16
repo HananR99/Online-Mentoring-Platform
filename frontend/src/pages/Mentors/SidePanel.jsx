@@ -3,9 +3,9 @@ const SidePanel = () => {
   return (
     <div className='shadow-panelShadow p-3 lg:p-5 rounded-md'>
         <div className="flex items-center justify-between">
-            <p className='text_para mt-0 font-semibold'>Booking(per hr)</p>
+            <p className='text_para mt-0 font-semibold'>Booking</p>
             <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">
-                USD 75.00
+                USD 75.00/hr 
             </span>
         </div>
 
