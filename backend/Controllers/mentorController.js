@@ -1,3 +1,4 @@
+import Booking from "../models/BookingSchema.js";
 import Mentor from "../models/MentorSchema.js";
 
 export const updateMentor = async(req, res)=>{
@@ -63,3 +64,33 @@ export const getAllMentor = async(req, res)=>{
         res.status(404).json({success:false, message:'Not found'});
     }
 };
+
+export const getMentorProfile = async(req,res)=>{
+    const mentorId = req.userId
+
+    try {
+        const mentor = await Mentor.findById(userId);
+
+        if(!mentor){
+            return res
+                .status(404)
+                .json({ success: false, message: "Mentor not found"});
+        }
+
+        const { password, ...rest } = mentor._doc;
+        ///////
+        const appointments = await Booking.find({mentor:mentorId})
+        res
+            .status(200)
+            .json({
+                success: true,
+                message: "Profile info is getting",
+                data: { ...rest, appointments },
+            });
+
+    } catch (err) {
+        res
+            .status(500)
+            .json({ success: false, message: "Something went wrong, cannot get"});
+    }
+}

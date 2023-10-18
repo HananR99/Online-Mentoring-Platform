@@ -1,91 +1,82 @@
-import { useState } from 'react';
-import signupImg from '../assets/images/signup.gif'
-import { Link, useNavigate } from 'react-router-dom';
-import uploadImageToCloudinary from '../Utils/uploadCloudinary';
-import { BASE_URL } from '../config';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import uploadImageToCloudinary from '../../Utils/uploadCloudinary';
+import { BASE_URL, token } from '../../config';
 import { toast } from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader'; 
 
-const Signup = () => {
 
-  const [selectedFile,setSelectedFile] = useState(null);
-  const [previewURL,setPreviewURL] = useState("");
-  const [loading, setLoading] = useState(false);
+const Profile = ({user}) => {
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email:"",
-    password:"",
-    photo: selectedFile,
-    gender: "",
-    role: "mentee",
-  });
+    const [selectedFile,setSelectedFile] = useState(null);
+    
+    const [loading, setLoading] = useState(false);
+  
+    const [formData, setFormData] = useState({
+      name: "",
+      email:"",
+      password:"",
+      photo: null,
+      gender: "",
+      
+    });
+  
+    const navigate = useNavigate()
 
-  const navigate = useNavigate()
-
-   const handleInputChange = e => {
-    setFormData({ ... formData, [e.target.name]: e.target.value});
-   };
-
-   const handleFileInputChange = async event => {
-
-    const file = event.target.files[0];
-
-    const data = await uploadImageToCloudinary(file);
-
-    setPreviewURL(data.url)
-    setSelectedFile(data.url)
-    setFormData({ ... formData, photo:data.url });
-    // later cloud
-   };
-
-   const submitHandler = async event => {
-    event.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await fetch(`${BASE_URL}/auth/register`,{
-        method:'post',
-        headers: {
-        'Content-Type':'application/json'
-        },
-        body: JSON.stringify(formData),
-      })
-
-      const {message} = await res.json()
-
-      if(!res.ok){
-        throw new Error(message)
+    useEffect(()=>{
+        setFormData({ name: user.name, email:user.email, photo:user.photo, gender:user.gender});
+    },[user]);
+  
+     const handleInputChange = e => {
+      setFormData({ ... formData, [e.target.name]: e.target.value});
+     };
+  
+     const handleFileInputChange = async event => {
+  
+      const file = event.target.files[0];
+  
+      const data = await uploadImageToCloudinary(file);
+  
+      
+      setSelectedFile(data.url)
+      setFormData({ ... formData, photo:data.url });
+      
+     };
+  
+     const submitHandler = async event => {
+      event.preventDefault();
+      setLoading(true);
+  
+      try {
+        const res = await fetch(`${BASE_URL}/users/${user._id}`,{
+          method:'put',
+          headers: {
+          'Content-Type':'application/json',
+          Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(formData),
+          
+        })
+  
+        const {message} = await res.json()
+  
+        if(!res.ok){
+          throw new Error(message)
+        }
+  
+        setLoading(false)
+        toast.success(message)
+        navigate('/users/profile/me')
+  
+      } catch (error) {
+        toast.error(err.message)
+        setLoading(false)
       }
-
-      setLoading(false)
-      toast.success(message)
-      navigate('/login')
-
-    } catch (error) {
-      toast.error(err.message)
-      setLoading(false)
-    }
-   };
+     };
 
   return (
-    <section className="px-5 xl:px-0">
-      <div className="max-w-[1170px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2">
-          {/* ======= img box =======*/}
-          <div className='hidden lg:block bg-primaryColor rounded-l-lg'>
-          <figure className='rounded-l-lg'>
-            <img src={signupImg} alt="" className='w-full rounded-l-lg'/>
-          </figure>
-          </div>
-
-           {/* -------- sign up form ---------*/}
-            <div className="rounded-l-lg lg:pl-16 py-10">
-              <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
-                Create an <span className="text-primaryColor">account</span>
-              </h3>
-
-              <form onSubmit={submitHandler}> 
+    <div className='mt-10'>
+        <form onSubmit={submitHandler}> 
               <div className="mb-5">
                 <input 
                   type="text" 
@@ -109,7 +100,8 @@ const Signup = () => {
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066dd61] focus:outline-none
                   focus:border-b-primaryColor text-[16px] leading-7 text-headingColor
                   placeholder:text-textColor rounded-md cursor-pointer"
-                  required
+                  aria-readonly
+                  readOnly
                 />
               </div>
               <div className="mb-5">
@@ -122,24 +114,11 @@ const Signup = () => {
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066dd61] focus:outline-none
                   focus:border-b-primaryColor text-[16px] leading-7 text-headingColor
                   placeholder:text-textColor rounded-md cursor-pointer"
-                  required
+                  
                 />
               </div>
 
               <div className="mb-5 flex items-center justify-between">
-                <label className='text-headingColor font-bold text-[16px] leading-7'>
-                  Are you a:
-                  <select
-                  name='role'
-                  value={formData.role}
-                  onChange={handleInputChange}
-                  className='text-textColor font-semibold text-[15px] leading-7 px-4 py-3
-                  focus:outline-none'
-                  >
-                  <option value="mentee">Mentee</option>
-                  <option value="mentor">Mentor</option>
-                  </select>
-                </label>
                 <label className='text-headingColor font-bold text-[16px] leading-7'>
                   Gender:
                   <select
@@ -158,11 +137,11 @@ const Signup = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
-                {selectedFile && (
+                {formData.photo && (
                 <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor
                 flex items-center justify-center">
                   <img 
-                  src={previewURL} 
+                  src={formData.photo} 
                   alt="" 
                   className='w-full rounded-full'
                   />
@@ -184,7 +163,7 @@ const Signup = () => {
                     items-center px-[0.75rem] py-[0.375rem] tetx-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor
                     font-semibold rounded-lg truncate cursor-pointer'
                     >
-                      Upload Photo
+                      {selectedFile ? selectedFile.name : "Upload Photo"}
                     </label>
                   </div>
 
@@ -196,24 +175,12 @@ const Signup = () => {
             type="submit"
             className="w-full bg-primaryColor text-whitr text-[18px] leading-[30px] rounded-lg px-4 py-3"
           >
-            {loading ? <HashLoader size={35} color='#ffffff'/> : 'Sign Up'}
+            {loading ? <HashLoader size={25} color='#ffffff'/> : 'Update'}
           </button>
-        </div>
+        </div>        
+    </form>
+ </div>
+  )
+}
 
-        <p className="mt-5 text-textColor text-center">
-          Already have an account?
-          <Link to="/login" className="text-primaryColor font-medium ml-1">
-            Login
-          </Link>
-        </p>
-
-              </form>
-            </div>
-
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Signup;
+export default Profile
