@@ -69,7 +69,7 @@ export const getMentorProfile = async(req,res)=>{
     const mentorId = req.userId
 
     try {
-        const mentor = await Mentor.findById(userId);
+        const mentor = await Mentor.findById(mentorId);
 
         if(!mentor){
             return res

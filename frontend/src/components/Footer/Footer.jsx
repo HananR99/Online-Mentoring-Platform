@@ -30,16 +30,17 @@ const quickLink01 =[
   },
   {
     path: "/",
+    display: "Blog",
+  },
+  {
+    path: "/",
     display: "About Us",
   },
   {
     path: "/services",
     display: "Services",
   },
-  {
-    path: "/",
-    display: "Blog",
-  },
+  
 ];
 
 const quickLink02 =[
@@ -50,10 +51,6 @@ const quickLink02 =[
   {
     path: "/",
     display: "Request an Appointment",
-  },
-  {
-    path: "/",
-    display: "Find the Location",
   },
   {
     path: "/",

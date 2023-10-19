@@ -36,7 +36,9 @@ const Home = () => {
             A community of peers, mentors and coaches that will help you land a dream career. 
             You never pay a dime. The only cost is to help people behind you.
             </p>
-            <button className='btn'>Check Your Slots</button>
+            <Link to='/mentors'>
+            <button className='btn'>Find Mentors</button>
+            </Link>
           </div>
 
             {/* ========hero counter========= */}
@@ -157,15 +159,26 @@ const Home = () => {
     {/* -----Services Section------------ */}
       <section>
         <div className="container">
-          <div className="xl:w-[470px] mx-auto">
+          <div className="xl:w-[870px] mx-auto">
             <h2 className='heading text-center'>Our Mentoring Services</h2>
             <p className='text_para text-center'>
             We provides personalized mentorship services to empower your growth. 
             Our experienced mentors offer one-on-one guidance to help you excel in your field.
+            We offer tailored mentorship services designed to help you excel in your chosen field. 
+            Connect with skilled mentors who provide one-on-one guidance, share valuable insights, 
+            and empower your personal and professional growth. Find the mentorship you need to reach 
+            your full potential.
+            <p>
+
+            </p>
+            
+            <Link to='/services'>
+                  <button className='btn'> Learn More </button>
+            </Link>
             </p>
           </div>
-
-          <ServiceList />
+        
+          {/* <ServiceList /> */}
         </div>
       </section>
     {/* -----Services Section end--------- */}
@@ -249,7 +262,7 @@ const Home = () => {
             Meet our exceptional mentors, accomplished professionals eager to guide and inspire your journey
             </p>
           </div>
-
+            
           <MentorList/>
       </div>
     </section>

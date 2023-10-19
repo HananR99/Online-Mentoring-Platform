@@ -36,7 +36,7 @@ const Signup = () => {
     setPreviewURL(data.url)
     setSelectedFile(data.url)
     setFormData({ ... formData, photo:data.url });
-    // later cloud
+    
    };
 
    const submitHandler = async event => {
@@ -63,7 +63,7 @@ const Signup = () => {
       navigate('/login')
 
     } catch (error) {
-      toast.error(err.message)
+      toast.error(error.message)
       setLoading(false)
     }
    };

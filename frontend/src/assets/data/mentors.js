@@ -1,12 +1,13 @@
 import mentorImg01 from "../images/mentor-img01.png";
 import mentorImg02 from "../images/mentor-img02.png";
 import mentorImg03 from "../images/mentor-img03.png";
+import mentorImg04 from "../images/about.jpeg";
 
 export const mentors = [
   {
     id: "01",
     name: "Eric D. Thomas",
-    specialization: "Enterprenuer",
+    specialization: "Career Develop",
     avgRating: 4.8,
     totalRating: 176,
     photo: mentorImg01,
@@ -15,7 +16,7 @@ export const mentors = [
   {
     id: "02",
     name: "Ray Dalio",
-    specialization: "Counselor",
+    specialization: "Educational",
     avgRating: 4.5,
     totalRating: 152,
     photo: mentorImg02,
@@ -24,10 +25,19 @@ export const mentors = [
   {
     id: "03",
     name: "Opra Winfrey",
-    specialization: "Associate Engineer",
+    specialization: "Leadership",
     avgRating: 4.5,
     totalRating: 137,
     photo: mentorImg03,
     totalMentees: 562,
+  },
+  {
+    id: "04",
+    name: "Richard Joe",
+    specialization: "Skill Development",
+    avgRating: 4.6,
+    totalRating: 107,
+    photo: mentorImg04,
+    totalMentees: 747,
   },
 ];
