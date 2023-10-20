@@ -91,7 +91,7 @@ export const login = async(req,res)=>{
         const isPasswordMatch = await bcrypt.compare(req.body.password, user.password)
 
     if(!isPasswordMatch){
-        return res.status(400).json({ status:false, message: "Invalid Credentials"});
+        return res.status(400).json({ status:false, message: "Check your Password!"});
     }
 
     //get token
