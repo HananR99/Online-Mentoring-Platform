@@ -1,4 +1,4 @@
-# Use an official Node runtime as the base image for building
+# Stage 1: Build the frontend application
 FROM node:14-alpine as build
 
 # Set the working directory in the container
@@ -14,18 +14,19 @@ RUN npm install
 COPY . .
 
 # Build the frontend application
-#RUN npm run dev
+# RUN npm run dev
 
-# Use NGINX as the web server to serve the built static files
-FROM nginx:alpine
+# Stage 2: Serve the built frontend with a simple HTTP server
+FROM node:14-alpine
 
-# Copy the built static files from the previous stage to NGINX's web root directory
-COPY --from=build /app/build /usr/share/nginx/html
+# Set the working directory in the container
+WORKDIR /app
 
-# Expose port 80 to the outside world
+# Copy the built frontend files from the previous stage
+COPY --from=build /app/dist /app
+
+# Expose port 5000 to the outside world (adjust as necessary)
 EXPOSE 5173
 
-# Start NGINX server when the container launches
-#CMD ["nginx", "-g", "daemon off;"]
-
-CMD ["npm", "run", "dev;"]
+# Command to run the frontend server
+CMD ["npm", "run", "dev"]
