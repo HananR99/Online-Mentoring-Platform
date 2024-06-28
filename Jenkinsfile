@@ -11,21 +11,25 @@ pipeline {
 
         stage('Build Backend') {
             steps {
-                script {
-                    // Navigate to the backend directory and build the Docker image
-                    dir('backend') {
-                        bat 'docker build -t backend:latest .'
-                    }
+                dir('backend') {
+                    bat 'docker build -t backend:latest .'
                 }
             }
         }
 
         stage('Build Frontend') {
             steps {
-                script {
-                    // Navigate to the frontend directory and build the Docker image
-                    dir('frontend') {
-                        bat 'docker build -t frontend:latest .'
+                dir('frontend') {
+                    // Adjust this script to capture build errors and provide more information
+                    script {
+                        try {
+                            bat 'docker build -t frontend:latest .'
+                        } catch (Exception e) {
+                            // Print out more detailed error information for debugging
+                            echo "Error building frontend: ${e}"
+                            currentBuild.result = 'FAILURE'
+                            error "Frontend build failed"
+                        }
                     }
                 }
             }
@@ -33,21 +37,17 @@ pipeline {
 
         stage('Deploy with Docker Compose') {
             steps {
-                script {
-                    // Deploy the application using Docker Compose
-                    bat 'docker-compose up --build -d'
-                }
+                // Your deployment steps here
+                bat 'docker-compose up -d --build'
             }
         }
     }
 
     post {
         success {
-            // Notify on successful build
             echo 'Build and deployment successful!'
         }
         failure {
-            // Notify on failed build
             echo 'Build or deployment failed!'
         }
     }
