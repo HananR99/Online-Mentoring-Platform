@@ -10,10 +10,10 @@ services:
       - "5000:5000"
     expose:
       - "5000"
-    networks:
-      - todoapp-network
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
+    #networks:
+     # - todoapp-network
+    #environment:
+    #  - ASPNETCORE_URLS=http://+:5000
     # depends_on:
     #   - sqlite
 
@@ -28,8 +28,8 @@ services:
       - "5173:5173"
     expose:
       - "5173"
-    networks:
-      - todoapp-network
+    #networks:
+     # - todoapp-network
 
 networks:
   todoapp-network:
