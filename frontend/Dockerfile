@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the frontend application
-RUN npm run
+RUN npm run build
 
 # Use NGINX as the web server to serve the built static files
 FROM nginx:alpine
@@ -23,7 +23,7 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Expose port 80 to the outside world
-EXPOSE 5173
+EXPOSE 80
 
 # Start NGINX server when the container launches
 CMD ["nginx", "-g", "daemon off;"]
