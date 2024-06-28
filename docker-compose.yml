@@ -8,21 +8,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
-<<<<<<< HEAD
-    expose:
-      - "5000"
-    #networks:
-     # - todoapp-network
-    #environment:
-    #  - ASPNETCORE_URLS=http://+:5000
-    # depends_on:
-    #   - sqlite
-=======
     networks:
       - todoapp-network
-    environment:
-      - ASPNETCORE_URLS=http://+:5000
->>>>>>> 3474bc090f3c86a7a21e39e5be8d12bca899947d
+    # environment:
+    #   - ASPNETCORE_URLS=http://+:5000
 
   frontend:
     image: frontend:latest
@@ -32,17 +21,9 @@ services:
     environment:
       NODE_ENV: production
     ports:
-<<<<<<< HEAD
       - "5173:5173"
-    expose:
-      - "5173"
-    #networks:
-     # - todoapp-network
-=======
-      - "5173:80"
     networks:
       - todoapp-network
->>>>>>> 3474bc090f3c86a7a21e39e5be8d12bca899947d
 
 networks:
   todoapp-network:
