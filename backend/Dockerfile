@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the backend application
-#RUN npm start
+ RUN npm start
 
 # Expose port 5000 to the outside world
 EXPOSE 5000
