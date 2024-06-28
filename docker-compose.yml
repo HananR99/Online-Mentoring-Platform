@@ -31,13 +31,6 @@ services:
     networks:
       - todoapp-network
 
-  # sqlite:
-  #   image: nouchka/sqlite3
-  #   volumes:
-  #     - ./backend/TodoApi/todoDev.db:/todoDev.db
-  #   networks:
-  #     - todoapp-network
-
 networks:
   todoapp-network:
     driver: bridge
