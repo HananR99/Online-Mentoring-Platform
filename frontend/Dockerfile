@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the frontend application
-RUN npm run dev
+#RUN npm run dev
 
 # Use NGINX as the web server to serve the built static files
 FROM nginx:alpine
